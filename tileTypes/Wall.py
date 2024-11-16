@@ -1,10 +1,11 @@
 from cmu_graphics import *
 
 class Wall:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self. color = 'black'
-    def drawTile(self, length):
-        drawRect(self.x, self.y, length, length, color = self.color)
+    def __init__(self, fill=(187,178,168)):
+        self.rgbVals = fill
+        self.color = rgb(self.rgbVals[0], self.rgbVals[1], self.rgbVals[2])
+    def __repr__(self):
+        return f'Wall({self.rgbVals})'
+    def drawTile(self, x, y, length):
+        drawRect(x, y, length, length, fill=self.color, border='black')
 

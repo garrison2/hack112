@@ -1,10 +1,12 @@
+from cmu_graphics import *
+
 class Door:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self):
         self. color = 'grey'
-    def drawTile(self, length):
-        drawRect(self.x, self.y, length, length, color =self.color)
-        drawline(self.x + length/2, self.y, self.x + length/2, self.y + length)
-        drawline(self.x, self.y + length/2, self.x + length, self.y + length/2)
+    def __repr__(self):
+        return 'Door()'
+    def drawTile(self, x, y, length):
+        drawRect(x, y, length, length, fill=self.color)
+        drawLine(x + length/2, y, x + length/2, y + length)
+        drawLine(x, y + length/2, x + length, y + length/2)
 
