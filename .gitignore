@@ -1,3 +1,11 @@
-*swp
-*venv
+*.swp
+.ls/**
+*.pyc
+.DS_Store
+
+__pycache__/**
+Include/**
+Lib/**
+Scripts/**
+*venv*
 cmu_graphics/**
