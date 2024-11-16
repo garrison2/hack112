@@ -5,12 +5,13 @@ from tileTypes import *
 from spriteTypes import *
 from maps import *
 
-from maps.map1 import map1 as gameMap
+from maps.map5 import map5 as gameMap
 
 def onAppStart(app):
     app.background = 'black'
-    app.rows = 20
-    app.cols = 20
+    app.board = gameMap
+    app.rows = len(app.board)
+    app.cols = len(app.board[0])
 
     setElements(app)
 
@@ -21,15 +22,13 @@ def setElements(app):
     app.boardTop = (app.height - squareDimensions)/2
     app.boardWidth = squareDimensions
     app.boardHeight = squareDimensions
-    app.board = [[None] * app.cols for row in range(app.rows)]
-
    
-    app.board = gameMap
     for row in range(app.rows):
         for col in range(app.cols):
             app.board[row][col].changeCoords(app.boardLeft, app.boardTop, app.boardWidth / app.cols)
  
-
+def onStep(app):
+    setElements(app)
 
 def redrawAll(app):
     for row in range(app.rows):

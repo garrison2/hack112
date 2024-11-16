@@ -1,5 +1,6 @@
 from cmu_graphics import *
 from pyautogui import size
+from sys import argv, path
 
 from Tile import *
 from spriteTypes import *
@@ -7,25 +8,38 @@ from spriteTypes import *
 from tileTypes.Floor import *
 from tileTypes.Door import *
 from tileTypes.Wall import *
+from objectTypes.Tripwire import *
+
+try:
+    from maps.map4 import map3 as gameMap
+except ImportError:
+    gameMap = None
+
 
 def onAppStart(app):
-    #    app.background = 'black'
 
-    app.rows = 20
-    app.cols = 20
+    app.rows = 41
+    app.cols = 41
 
     app.boardLeft = 0
     app.boardTop = 0
     app.boardWidth = 1000
     app.boardHeight = 1000
-    app.board = [[None] * app.cols for row in range(app.rows)]
 
-    for row in range(app.rows):
-        for col in range(app.cols):
-            app.board[row][col] = Tile(col, row, app.boardLeft, app.boardTop, app.boardWidth / app.cols)
- 
+    if gameMap == None:
+        app.board = [[None] * app.cols for row in range(app.rows)]
+
+        for row in range(app.rows):
+            for col in range(app.cols):
+                app.board[row][col] = Tile(col, row, app.boardLeft, app.boardTop, app.boardWidth / app.cols)
+    else:
+        app.board = gameMap
+     
+
     app.lastMouseCoords = (None, None)
-    app.currentKeyTile = Floor()
+    app.currentKey = Floor()
+    app.currentKeyType = 'object'
+    app.currentOrientation = 'horizontal'
 
 def redrawAll(app):
     for row in range(app.rows):
@@ -35,8 +49,8 @@ def redrawAll(app):
                 cell.draw()
     iconX = app.width - 200
     iconY = app.height - 200
-    drawRect(iconX, iconY, 200, 200, fill=app.currentKeyTile.color)
-    drawLabel(app.currentKeyTile, iconX + 100, iconY - 100, size=40)
+    drawRect(iconX, iconY, 200, 200, fill=app.currentKey.color)
+    drawLabel(app.currentKey, iconX + 100, iconY - 100, size=40)
 
 
 def onMousePress(app, x, y):
@@ -45,8 +59,11 @@ def onMousePress(app, x, y):
 
     col, row = coordToIndex(x, y, cellWidth, cellHeight)
     if row < app.rows and col < app.cols:
-        print(type(app.board[row][col].type), app.board[row][col].type.color)
-        app.board[row][col].type = app.currentKeyTile
+        if app.currentKeyType == 'tile':
+            app.board[row][col].type = app.currentKey
+        elif app.currentKeyType == 'object':
+            app.board[row][col].object = app.currentKey
+
 
     app.lastMouseCoords = (x, y)
     
@@ -61,38 +78,31 @@ def onMouseRelease(app, x2, y2):
     for row in range(min(row1, row2), max(row1, row2) + 1):
         for col in range(min(col1, col2), max(col1, col2) + 1):
          if row < app.rows and col < app.cols:
-            app.board[row][col].type = app.currentKeyTile
+            app.board[row][col].type = app.currentKey
 
 def onKeyPress(app, key):
-    if key == 'up':
-        app.cols += 1
-        app.rows += 1
-        if len(app.board) < app.rows:
-            for col in range(app.cols):
-                xPos = app.boardLeft + (app.boardWidth / app.cols) * col
-                yPos = app.boardTop + (app.boardHeight / app.rows) * (app.rows - 1) 
-                app.board.append(Tile(xPos, yPos, app.boardWidth /app.cols))
-
-        if len(app.board[0]) < app.cols:
-            for row in range(app.rows):
-                if len(app.board[row]) < app.cols:
-                    xPos = app.boardLeft + (app.boardWidth / app.cols) * (app.cols - 1)
-                    yPos = app.boardTop + (app.boardHeight / app.rows) * row
-                    app.board.append(Tile(xPos, yPos, app.boardWidth /app.cols))
-
-
-
-
-    elif key == 'F':
-        app.currentKeyTile = Floor()
+    if key == 'F':
+        app.currentKeyType = 'tile'
+        app.currentKey = Floor()
     elif key == 'W':
-        print('Wall')
-        app.currentKeyTile = Wall()
+        app.currentKeyType = 'tile'
+        app.currentKey = Wall()
     elif key == 'O':
-        app.currentKeyTile = Wall((157,174,17))
+        app.currentKeyType = 'tile'
+        app.currentKey = Wall((157,174,17))
     elif key == 'D':
-        print('Door')
-        app.currentKeyTile = Door()
+        app.currentKeyType = 'tile'
+        app.currentKey = Door()
+    elif key == 'T':
+        app.currentKeyType = 'object'
+        app.currentKey = Tripwire(app.currentOrientation)
+    elif key == 'r':
+        if app.currentOrientation == 'horizontal':
+            print('cur hor')
+            app.currentOrientation = 'vertical'
+        else:
+            app.currentOrientation = 'horizontal'
+        print('r', app.currentOrientation)
     elif key == 'S':
         saveMap(app)
 

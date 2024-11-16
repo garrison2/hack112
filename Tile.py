@@ -1,6 +1,6 @@
 from tileTypes.Floor import *
 class Tile:
-    def __init__(self, x, y, xOffset, yOffset, length, tileType=Floor(), obj):
+    def __init__(self, x, y, xOffset, yOffset, length, tileType=Floor(), obj=None):
         self.type = tileType
         self.viewable = True
         self.x = x
