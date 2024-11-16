@@ -1,6 +1,6 @@
 from PIL import image
 
-class ta:
+class Ta:
     philip = "phillip.png"
     varun = "varun.png"
     dragon3 = "dragon3.png"
@@ -11,7 +11,7 @@ class ta:
         self.speed = speed
         self.state = f'{state}' #patrolling
         self.FOV = None
-        self.image = ta.makeCMUImage(f'{self.name}.png')
+        self.image = Ta.makeCMUImage(f'{self.name}.png')
 
     def makeCMUImage(name):
         image = imageFolder.open(f"images/{name}")
@@ -26,3 +26,4 @@ class ta:
 
     def startChase(self,player):
         #move to player
+        pass
