@@ -1,6 +1,6 @@
 from cmu_graphics import *
-from tile_types import *
-from sprite_types import *
+from tileTypes import *
+from spriteTypes import *
 
 def onAppStart(app):
     app.rows = 10
