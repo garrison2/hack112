@@ -1,8 +1,9 @@
 from cmu_graphics import *
 from pyautogui import size
-from Tile import *
+from tile import *
 from tileTypes import *
 from spriteTypes import *
+from maps import *
 
 from maps.map2 import map2 as gameMap
 
