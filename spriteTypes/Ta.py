@@ -54,7 +54,6 @@ class Ta:
         self.target = player
 
     def patrol(self, grid, rows, cols):
-        # Example: Move right until hitting the edge, then move down
         if self.col + 1 < cols:
             self.col += 1
         else:
@@ -62,26 +61,35 @@ class Ta:
                 self.row += 1
                 self.col = 0
 
-    def moveToward(self, targetRow, targetCol):
+    def moveToward(self, targetRow, targetCol, grid):
         dx = targetCol - self.col
         dy = targetRow - self.row
+        if abs(dx) > abs(dy):  # Prioritize horizontal movement
+            nextCol = self.col + (self.speed if dx > 0 else -self.speed)
+            if grid[self.row][nextCol] != 'wall':  # Check for walls
+                self.col = nextCol
+        elif dy != 0:  # Vertical movement
+            nextRow = self.row + (self.speed if dy > 0 else -self.speed)
+            if grid[nextRow][self.col] != 'wall': 
+                self.row = nextRow
 
-        if abs(dx) > abs(dy):  # Move horizontally
-            self.col += self.speed if dx > 0 else -self.speed
-        elif dy != 0:  # Move vertically
-            self.row += self.speed if dy > 0 else -self.speed
 
     def update(self, player, grid, rows, cols):
-        self.calculateFOV(rows, cols)  # Recalculate FOV
+        self.calculateFOV(rows, cols)
 
         if self.state == "patrolling":
-            if self.detectPlayer(player):
-                self.startChase(player)  # Start chasing if player detected
+            if self.detectPlayer(player):  
+                self.startChase(player)  
             else:
-                self.patrol(grid, rows, cols)  # Continue patrolling
+                self.patrol(grid, rows, cols)  
+
         elif self.state == "chasing":
-            if player is None:
-                self.state = "patrolling"  # Return to patrolling if player disappears
+            if player is None:  
+                self.state = "patrolling"  
                 self.target = None
             else:
-                self.moveToward(player.row, player.col)  # Move toward player
+                if self.detectPlayer(player):
+                    self.moveToward(player.row, player.col, grid)
+                else:
+                    self.state = "patrolling"
+                    self.target = None
