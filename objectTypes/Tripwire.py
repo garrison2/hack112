@@ -8,7 +8,7 @@ class Tripwire:
     def __repr__(self):
         return 'Tripwire()'
     
-    def drawTile(self, x, y, length):
+    def draw(self, x, y, length):
         if self.orientation == 'horizontal':
             drawLine(x, y + length / 2, x + length, y + length / 2, fill = 'red', lineWidth=length/10)
         elif self.orientation == 'vertical':
