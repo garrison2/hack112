@@ -1,4 +1,4 @@
-
+from floor import *
 class tile:
     def __init__(self):
         self.type = 0 # some sort of object 
