@@ -22,7 +22,7 @@ class Tile:
         if self.character != None:
             self.character.draw(calculatedX, calculatedY)
         if self.obj != None:
-            self.obj.draw(calculatedX, calculatedY)
+            self.obj.draw(calculatedX, calculatedY, self.length)
 
     def changeCoords(self, newXOffset, newYOffset, newLength):
         self.xOffset = newXOffset
