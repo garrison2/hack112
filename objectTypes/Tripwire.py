@@ -9,6 +9,7 @@ class Tripwire:
         return 'Tripwire()'
     
     def draw(self, x, y, length):
+        print(self.orientation)
         if self.orientation == 'horizontal':
             drawLine(x, y + length / 2, x + length, y + length / 2, fill = 'red', lineWidth=length/10)
         elif self.orientation == 'vertical':

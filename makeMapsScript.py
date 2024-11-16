@@ -35,11 +35,10 @@ def onAppStart(app):
     else:
         app.board = gameMap
      
-
     app.lastMouseCoords = (None, None)
-    app.currentKey = Floor()
-    app.currentKeyType = 'object'
     app.currentOrientation = 'horizontal'
+    app.currentTileType = Floor()
+    app.currentTileObject = None
 
 def redrawAll(app):
     for row in range(app.rows):
@@ -49,25 +48,32 @@ def redrawAll(app):
                 cell.draw()
     iconX = app.width - 200
     iconY = app.height - 200
-    drawRect(iconX, iconY, 200, 200, fill=app.currentKey.color)
-    drawLabel(app.currentKey, iconX + 100, iconY - 100, size=40)
+    if app.currentTileType != None:
+        drawRect(iconX, iconY, 200, 200, fill=app.currentTileType.color)
+        drawLabel(app.currentTileType, iconX + 100, iconY - 100, size=40)
+    else:
+        drawRect(iconX, iconY, 200, 200, fill=app.currentTileObject.color)
+        drawLabel(app.currentTileObject, iconX + 100, iconY - 100, size=40)
+
 
 
 def onMousePress(app, x, y):
+    makeObject(app)
     cellWidth = app.boardWidth / app.cols
     cellHeight = app.boardHeight / app.rows
 
     col, row = coordToIndex(x, y, cellWidth, cellHeight)
     if row < app.rows and col < app.cols:
-        if app.currentKeyType == 'tile':
-            app.board[row][col].type = app.currentKey
-        elif app.currentKeyType == 'object':
-            app.board[row][col].object = app.currentKey
+        if app.currentTileType != None:
+            app.board[row][col].type = app.currentTileType
+        elif app.currentTileObject != None:
+            app.board[row][col].object = app.currentTileObject
 
 
     app.lastMouseCoords = (x, y)
     
 def onMouseRelease(app, x2, y2):
+    makeObject(app)
     cellHeight = app.boardHeight/ app.rows
     cellWidth = app.boardWidth / app.cols
 
@@ -77,34 +83,41 @@ def onMouseRelease(app, x2, y2):
 
     for row in range(min(row1, row2), max(row1, row2) + 1):
         for col in range(min(col1, col2), max(col1, col2) + 1):
-         if row < app.rows and col < app.cols:
-            app.board[row][col].type = app.currentKey
-
-def onKeyPress(app, key):
+            if row < app.rows and col < app.cols:
+                if app.currentTileType != None:
+                    app.board[row][col].type = app.currentTileType
+                elif app.currentTileObject != None:
+                    app.board[row][col].object = app.currentTileObject
+            
+def makeObject(app):
+    key = app.key
     if key == 'F':
-        app.currentKeyType = 'tile'
-        app.currentKey = Floor()
+        app.currentTileType = Floor()
+        app.currentTileObject = None
     elif key == 'W':
-        app.currentKeyType = 'tile'
-        app.currentKey = Wall()
+        app.currentTileType = Wall()
+        app.currentTileObject = None
     elif key == 'O':
-        app.currentKeyType = 'tile'
-        app.currentKey = Wall((157,174,17))
+        app.currentTileType = Wall((157,174,17))
+        app.currentTileObject = None
     elif key == 'D':
-        app.currentKeyType = 'tile'
-        app.currentKey = Door()
+        app.currentTileType = Door()
+        app.currentTileObject = None
     elif key == 'T':
-        app.currentKeyType = 'object'
-        app.currentKey = Tripwire(app.currentOrientation)
+        app.currentTileObject = Tripwire(app.currentOrientation)
+        app.currentTileType = None
     elif key == 'r':
         if app.currentOrientation == 'horizontal':
-            print('cur hor')
             app.currentOrientation = 'vertical'
         else:
             app.currentOrientation = 'horizontal'
-        print('r', app.currentOrientation)
     elif key == 'S':
         saveMap(app)
+
+
+def onKeyPress(app, key):
+    app.key = key
+    makeObject(app)
 
 def saveMap(app):
     fileWritten = False

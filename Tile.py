@@ -9,7 +9,7 @@ class Tile:
         self.yOffset = yOffset
         self.length = length
         self.character = None
-        self.obj = obj
+        self.object = obj
 
 
     def setType(self, newType):
@@ -21,8 +21,9 @@ class Tile:
         self.type.drawTile(calculatedX, calculatedY, self.length)
         if self.character != None:
             self.character.draw(calculatedX, calculatedY)
-        if self.obj != None:
-            self.obj.draw(calculatedX, calculatedY, self.length)
+        if self.object != None:
+            print('draw')
+            self.object.draw(calculatedX, calculatedY, self.length)
 
     def changeCoords(self, newXOffset, newYOffset, newLength):
         self.xOffset = newXOffset
