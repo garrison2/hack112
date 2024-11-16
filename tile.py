@@ -1,7 +1,7 @@
-from floor import *
+from tile_types.floor import *
 class tile:
     def __init__(self):
-        self.type = 0 # some sort of object 
+        self.type = Floor # some sort of object 
         self.viewable = True
     def drawTile(self):
         if self.viewable:
