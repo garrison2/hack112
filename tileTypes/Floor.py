@@ -4,5 +4,6 @@ class Floor:
     def __init__(self):
         self. color = 'brown'
     def drawTile(self, x, y, length):
-        drawRect(x, y, length, length, fill=self.color)
+#        print(x, y)
+        drawRect(x, y, length, length, fill=self.color, border='black')
 

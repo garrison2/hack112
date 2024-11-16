@@ -1,3 +1,5 @@
+from cmu_graphics import *
+
 class Wall:
     def __init__(self, x, y):
         self.x = x

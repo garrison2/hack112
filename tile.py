@@ -1,6 +1,6 @@
 from tileTypes.Floor import *
 class Tile:
-    def __init__(self,x,y,length):
+    def __init__(self, x, y, length):
         self.type = Floor() # some sort of object 
         self.viewable = True
         self.x = x
@@ -13,8 +13,9 @@ class Tile:
         self.type = newType 
     
     def draw(self):
+        print(self.x, self.y)
         self.type.drawTile(self.x, self.y, self.length)
         if self.character != None:
-            character.draw(self.x,self.y)
+            self.character.draw(self.x, self.y)
 
     
