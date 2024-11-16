@@ -1,6 +1,9 @@
 *.swp
 .ls/**
+*.pyc
+
 Include/**
 Lib/**
 Scripts/**
 *venv*
+cmu_graphics/**
