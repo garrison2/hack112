@@ -1,7 +1,7 @@
 from cmu_graphics import *
 from pyautogui import size
 
-from tile import *
+from Tile import *
 from spriteTypes import *
 
 from tileTypes.Floor import *
@@ -22,10 +22,8 @@ def onAppStart(app):
 
     for row in range(app.rows):
         for col in range(app.cols):
-            xPos = app.boardLeft + (app.boardWidth / app.cols) * col
-            yPos = app.boardTop + (app.boardHeight / app.rows) * row
-            app.board[row][col] = Tile(xPos, yPos, app.boardWidth / app.cols)
-
+            app.board[row][col] = Tile(col, row, app.boardLeft, app.boardTop, app.boardWidth / app.cols)
+ 
     app.lastMouseCoords = (None, None)
     app.currentKeyTile = Floor()
 

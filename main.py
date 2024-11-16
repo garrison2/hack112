@@ -5,7 +5,7 @@ from tileTypes import *
 from spriteTypes import *
 from maps import *
 
-from maps.map2 import map2 as gameMap
+from maps.map1 import map1 as gameMap
 
 def onAppStart(app):
     app.background = 'black'
@@ -23,14 +23,12 @@ def setElements(app):
     app.boardHeight = squareDimensions
     app.board = [[None] * app.cols for row in range(app.rows)]
 
+   
+    app.board = gameMap
     for row in range(app.rows):
         for col in range(app.cols):
-            xPos = app.boardLeft + (app.boardWidth / app.cols) * col
-            yPos = app.boardTop + (app.boardHeight / app.rows) * row
-            app.board[row][col] = Tile(xPos, yPos, app.boardWidth / app.cols)
-    
-    app.board = gameMap
-
+            app.board[row][col].changeCoords(app.boardLeft, app.boardTop, app.boardWidth / app.cols)
+ 
 
 
 def redrawAll(app):
