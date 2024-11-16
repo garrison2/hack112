@@ -16,6 +16,8 @@ def onAppStart(app):
             yPos = app.boardTop + (app.boardHeight / app.rows) * row
             app.board[row][col] = Tile(xPos, yPos,app.boardWidth / app.cols)
 
+def test():
+    pass
 
 def redrawAll(app):
     for row in range(app.rows):
