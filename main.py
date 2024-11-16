@@ -1,6 +1,6 @@
 from cmu_graphics import *
 from pyautogui import size
-from Tile import *
+from tile import *
 from tileTypes import *
 from spriteTypes import *
 
@@ -8,10 +8,11 @@ def onAppStart(app):
 
     app.rows = 10
     app.cols = 10
-    app.boardLeft = 20
-    app.boardTop = 10
-    app.boardWidth = 300
-    app.boardHeight = 300
+    screenWidth, screenHeight = size()
+    app.boardWidth = screenHeight
+    app.boardHeight = screenHeight
+    app.boardLeft = screenWidth / 2 - app.boardWidth / 2
+    app.boardTop = 0
     app.board = []
     for i in range(app.rows):
         app.board.append([])
