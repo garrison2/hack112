@@ -1,4 +1,5 @@
 from cmu_graphics import *
+from tile import *
 from tileTypes import *
 from spriteTypes import *
 
