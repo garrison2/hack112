@@ -3,6 +3,7 @@ from pyautogui import size
 from tile import *
 from tileTypes import *
 from spriteTypes import *
+from maps import *
 
 def onAppStart(app):
 
@@ -28,6 +29,7 @@ def onAppStart(app):
         for cell in rows:
             print(cell.x, cell.y)
     print('______________________________-')
+    
 
 def redrawAll(app):
     for row in range(app.rows):

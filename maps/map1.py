@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 from cmu_graphics import *
-from Tile import Tile
+from tile import Tile
 from tileTypes.Floor import Floor
 from tileTypes.Wall import Wall
 from tileTypes.Door import Door
