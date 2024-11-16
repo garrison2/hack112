@@ -1,6 +1,6 @@
 from tileTypes.Floor import *
 class Tile:
-    def __init__(self, x, y, xOffset, yOffset, length, tileType=Floor()):
+    def __init__(self, x, y, xOffset, yOffset, length, tileType=Floor(), obj):
         self.type = tileType
         self.viewable = True
         self.x = x
@@ -9,6 +9,7 @@ class Tile:
         self.yOffset = yOffset
         self.length = length
         self.character = None
+        self.obj = obj
 
 
     def setType(self, newType):
@@ -19,7 +20,9 @@ class Tile:
         calculatedY =  self.yOffset + (self.y * self.length)
         self.type.drawTile(calculatedX, calculatedY, self.length)
         if self.character != None:
-            self.character.draw(self.x, self.y)
+            self.character.draw(calculatedX, calculatedY)
+        if self.obj != None:
+            self.obj.draw(calculatedX, calculatedY)
 
     def changeCoords(self, newXOffset, newYOffset, newLength):
         self.xOffset = newXOffset
