@@ -1,36 +1,40 @@
-from PIL import Image
-import os
+import PIL
+import PIL.Image
 from cmu_graphics import *
+import os, pathlib
 
-imageFolder = "/Users/vishwa/Downloads/VSCode/hack112/spriteTypes/imageFolder"
+imageFolder = "spriteTypes/imageFolder"
+# imageFolder = ["cmu://856355/35005325/phillip.png", "cmu://856355/35005331/tiffany.png", "cmu://856355/35005335/varun.png"]
 fact = 40  
 
 class Ta:
-    def __init__(self, row, col, name, state, speed=1):
+    def __init__(self, row, col, name, state):
         self.row = row
         self.col = col
         self.name = name
-        self.speed = speed
+        self.speed = 1
         self.state = state 
         self.FOV = []  
-        self.image = Ta.makeCMUImage(f"{self.name}.png")  # Load sprite image
-        self.width = fact * 0.8 
+        self.width = fact * 0.8
         self.height = fact * 0.8
         self.target = None  
+        self.image = Ta.openImage(f'imageFolder/{name}.png')
+        # if name == 'varun':
+        #     self.image =  imageFolder[2]
+        # elif name == 'phillip':
+        #     self.image =  imageFolder[0]
+        # else:
+        #     self.image =  imageFolder[1]
 
-    @staticmethod
-    def makeCMUImage(name):
-        imagePath = os.path.join(imageFolder, name)
-        if not os.path.exists(imagePath):
-            raise FileNotFoundError(f"Image {imagePath} not found.")
-        pilImage = Image.open(imagePath)
-        return CMUImage(pilImage)
+    def openImage(fileName):
+        return CMUImage(PIL.Image.open(os.path.join(pathlib.Path(__file__).parent,fileName)))
 
     def drawSprite(self):
-        # Calculate the top-left corner of the TA's sprite to center it in the grid cell
         x = self.col * fact + (fact - self.width) / 2
         y = self.row * fact + (fact - self.height) / 2
-        drawImage(self.image, x, y, self.width, self.height)
+        print(self.image)
+        drawImage(self.image, x, y)
+        
 
     def calculateFOV(self, rows, cols, range=2):
         self.FOV = [

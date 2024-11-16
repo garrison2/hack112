@@ -1,3 +1,4 @@
+from cmu_graphics import *
 class Camera:
     def __init__(self, row, col, length=40, detectionRange=2):
         self.row = row
