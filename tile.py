@@ -14,7 +14,7 @@ class Tile:
     def draw(self):
         print(self.x, self.y)
         self.type.drawTile(self.x, self.y, self.length)
-        if self.character != Nonœe:
+        if self.character != None:
             self.character.draw(self.x, self.y)
 
     
