@@ -1,6 +1,7 @@
 *.swp
 .ls/**
 *.pyc
+__pycache__
 
 Include/**
 Lib/**
