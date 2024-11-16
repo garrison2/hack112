@@ -38,6 +38,52 @@ def redrawAll(app):
             if isinstance(cell, Tile):
                 cell.draw()
 
+def onKeyPress(app,key):
+    if key == 'up':
+        player.moveUp()
+    elif key == 'down':
+        player.moveDown()
+    elif key == 'right':
+        player.moveRight()
+    elif key == 'left':
+        player.moveLeft
+
+def onKeyHold(key):
+    if key == 'up':
+        moveUp(app,player)
+    elif key == 'down':
+        moveDown(app,player)
+    elif key == 'right':
+        moveRight(app,player)
+    elif key == 'left':
+        moveLeft(app,player)
+
+def moveRight(app,character):
+        if (character.xIndex + 1 < app.board.length() 
+            and app.board[character.xIndex + 1].character == None):
+            app.board[character.xIndex][character.yIndex].character = None
+            app.board[character.xIndex+1][character.yIndex].character = character
+
+
+def moveLeft(app,character):
+    if (character.xIndex - 1 > -1 
+        and app.board[character.xIndex - 1].character == None):
+        app.board[character.xIndex][character.yIndex].character = None
+        app.board[character.xIndex-1][character.yIndex].character = character
+
+def moveUp(app,character):
+        if (character.yIndex - 1 > -1
+            and app.board[character.yIndex - 1].character == None):
+            app.board[character.xIndex][character.yIndex].character = None
+            app.board[character.xIndex][character.yIndex-1].character = character
+
+def moveDown(app,character):
+        if (character.yIndex + 1 < app.board.length() 
+            and app.board[character.xIndex + 1].character == None):
+            app.board[character.xIndex][character.yIndex].character = None
+            app.board[character.xIndex][character.yIndex+1].character = character
+
+
 def main():
     width, height = size()
     width = rounded(width * 3/4)
