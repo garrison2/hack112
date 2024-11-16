@@ -1,11 +1,11 @@
-from tile_types.floor import *
-from sprite_types.ta import*
+from tileTypes.floor import *
+from spriteTypes.ta import*
 
 class Tile:
     def __init__(self, type, character):
         self.type = type # some sort of object 
         self.character = character
-        self.viewable = isViewable(self)
+        self.viewable = None
     def drawTile(self):
         if self.viewable:
            #  draw(self.type) 
