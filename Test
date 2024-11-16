@@ -1,0 +1,10 @@
+from cmu_graphics import *
+
+def redrawAll(app):
+    drawRect(100, 100, 100, 100, fill = 'pink')
+
+
+runApp()
+print('hi')
+
+print('hello')
