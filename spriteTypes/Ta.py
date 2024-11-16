@@ -1,4 +1,5 @@
 from PIL import image
+from cmu_graphics import *
 
 class ta:
     philip = "phillip.png"
