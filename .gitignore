@@ -1,2 +1,6 @@
-*swp
-*venv
+*.swp
+.ls/**
+Include/**
+Lib/**
+Scripts/**
+*venv*
