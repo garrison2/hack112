@@ -1,4 +1,4 @@
-from tile_types.floor import *
+from tileTypes.floor import *
 class Tile:
     def __init__(self,x,y,length):
         self.type = Floor # some sort of object 
