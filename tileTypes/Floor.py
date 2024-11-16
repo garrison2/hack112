@@ -1,8 +1,8 @@
+from cmu_graphics import *
+
 class Floor:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self):
         self. color = 'brown'
-    def drawTile(self, length):
-        drawRect(self.x, self.y, length, length, color =self.color)
+    def drawTile(self, x, y, length):
+        drawRect(x, y, length, length, fill=self.color)
 
